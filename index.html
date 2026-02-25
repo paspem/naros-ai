@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -27,10 +28,27 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#features" class="nav-link">Features</a></li>
                 <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
-                <li><a href="#templates" class="nav-link">Templates</a></li>
+                <li><a href="#ai-studio" class="nav-link">AI Studio</a></li>
                 <li><a href="#pricing" class="nav-link">Pricing</a></li>
-                <li><a href="#" class="nav-link nav-login">Log in</a></li>
-                <li><a href="#" class="btn btn-primary btn-small">Sign Up</a></li>
+                <!-- Auth State: Logged Out -->
+                <li id="navAuthLoggedOut">
+                    <a href="#" class="nav-link nav-login" id="btnNavLogin">Log in</a>
+                </li>
+                <li id="navSignupBtn">
+                    <a href="#" class="btn btn-primary btn-small" id="btnNavSignup">Sign Up</a>
+                </li>
+                <!-- Auth State: Logged In -->
+                <li id="navAuthLoggedIn" style="display:none;">
+                    <div class="nav-user-menu">
+                        <div class="nav-avatar" id="navAvatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="nav-username" id="navUsername">User</span>
+                        <button class="btn btn-outline btn-small" id="btnLogout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </li>
             </ul>
             
             <div class="nav-toggle" id="navToggle">
@@ -40,6 +58,153 @@
             </div>
         </div>
     </nav>
+
+    <!-- ============================================ -->
+    <!-- AUTH MODALS -->
+    <!-- ============================================ -->
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="modalLogin">
+        <div class="modal-box">
+            <button class="modal-close" id="closeModalLogin"><i class="fas fa-times"></i></button>
+            <div class="modal-logo">
+                <i class="fas fa-bolt"></i>
+                <span>BuildAI</span>
+            </div>
+            <h2 class="modal-title">Welcome Back!</h2>
+            <p class="modal-subtitle">Log in to your account to continue building</p>
+            
+            <div class="auth-error" id="loginError" style="display:none;"></div>
+            
+            <form class="auth-form" id="formLogin">
+                <div class="form-group">
+                    <label for="loginEmail"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="loginEmail" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword"><i class="fas fa-lock"></i> Password</label>
+                    <div class="input-password">
+                        <input type="password" id="loginPassword" placeholder="••••••••" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <a href="#" id="btnForgotPassword" class="forgot-link">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary btn-large btn-full" id="btnLoginSubmit">
+                    <span class="btn-text">Log In</span>
+                    <span class="btn-loader" style="display:none;"><i class="fas fa-spinner fa-spin"></i></span>
+                </button>
+            </form>
+
+            <div class="auth-divider"><span>or</span></div>
+
+            <button class="btn btn-google btn-large btn-full" id="btnGoogleLogin">
+                <i class="fab fa-google"></i> Continue with Google
+            </button>
+
+            <p class="modal-switch">
+                Don't have an account? 
+                <a href="#" id="switchToRegister">Sign up free</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="modalRegister">
+        <div class="modal-box">
+            <button class="modal-close" id="closeModalRegister"><i class="fas fa-times"></i></button>
+            <div class="modal-logo">
+                <i class="fas fa-bolt"></i>
+                <span>BuildAI</span>
+            </div>
+            <h2 class="modal-title">Create Account</h2>
+            <p class="modal-subtitle">Join thousands of builders creating with AI</p>
+            
+            <div class="auth-error" id="registerError" style="display:none;"></div>
+            
+            <form class="auth-form" id="formRegister">
+                <div class="form-group">
+                    <label for="registerName"><i class="fas fa-user"></i> Full Name</label>
+                    <input type="text" id="registerName" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="registerEmail" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword"><i class="fas fa-lock"></i> Password</label>
+                    <div class="input-password">
+                        <input type="password" id="registerPassword" placeholder="Min. 6 characters" required minlength="6">
+                        <button type="button" class="toggle-password" onclick="togglePassword('registerPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword"><i class="fas fa-lock"></i> Confirm Password</label>
+                    <div class="input-password">
+                        <input type="password" id="registerConfirmPassword" placeholder="Repeat password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('registerConfirmPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-large btn-full" id="btnRegisterSubmit">
+                    <span class="btn-text">Create Account</span>
+                    <span class="btn-loader" style="display:none;"><i class="fas fa-spinner fa-spin"></i></span>
+                </button>
+            </form>
+
+            <div class="auth-divider"><span>or</span></div>
+
+            <button class="btn btn-google btn-large btn-full" id="btnGoogleRegister">
+                <i class="fab fa-google"></i> Continue with Google
+            </button>
+
+            <p class="modal-switch">
+                Already have an account? 
+                <a href="#" id="switchToLogin">Log in</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SETTINGS MODAL (API Key) -->
+    <!-- ============================================ -->
+    <div class="modal-overlay" id="modalSettings">
+        <div class="modal-box">
+            <button class="modal-close" id="closeModalSettings"><i class="fas fa-times"></i></button>
+            <h2 class="modal-title"><i class="fas fa-cog"></i> AI Settings</h2>
+            <p class="modal-subtitle">Configure your API keys to use AI features</p>
+            
+            <div class="settings-form">
+                <div class="form-group">
+                    <label for="geminiApiKey">
+                        <i class="fas fa-key"></i> Gemini API Key
+                        <a href="https://aistudio.google.com/app/apikey" target="_blank" class="get-key-link">
+                            <i class="fas fa-external-link-alt"></i> Get Free Key
+                        </a>
+                    </label>
+                    <div class="input-password">
+                        <input type="password" id="geminiApiKey" placeholder="AIzaSy...">
+                        <button type="button" class="toggle-password" onclick="togglePassword('geminiApiKey')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <small class="form-hint">Your key is stored locally in browser. Never shared to any server.</small>
+                </div>
+                <button class="btn btn-primary btn-large btn-full" id="btnSaveSettings">
+                    <i class="fas fa-save"></i> Save Settings
+                </button>
+                <div class="settings-success" id="settingsSuccess" style="display:none;">
+                    <i class="fas fa-check-circle"></i> Settings saved successfully!
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero" id="hero">
@@ -51,18 +216,21 @@
         
         <div class="container hero-container">
             <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-star"></i> Powered by Gemini AI
+                </div>
                 <h1 class="hero-title">
                     Dream big, <br>
                     <span class="gradient-text">build fast</span>
                 </h1>
                 <p class="hero-subtitle">
                     Turn your ideas into live apps and websites with AI.<br>
-                    No coding required.
+                    Text, Image & Video generation — all in one place.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary btn-large">
+                    <a href="#ai-studio" class="btn btn-primary btn-large" id="heroStartBtn">
+                        <i class="fas fa-magic"></i>
                         Start Building Free
-                        <i class="fas fa-arrow-right"></i>
                     </a>
                     <a href="#how-it-works" class="btn btn-secondary btn-large">
                         <i class="fas fa-play-circle"></i>
@@ -101,62 +269,66 @@
             
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
                         <i class="fas fa-magic"></i>
                     </div>
-                    <h3 class="feature-title">AI-Powered Builder</h3>
+                    <h3 class="feature-title">AI Text Generator</h3>
                     <p class="feature-description">
-                        Describe your app in plain language and watch AI build it in real-time. No technical knowledge needed.
+                        Generate articles, copy, code, and more using Google Gemini AI. Powered by the latest language models.
                     </p>
+                    <span class="feature-badge">Powered by Gemini</span>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-paint-brush"></i>
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                        <i class="fas fa-image"></i>
                     </div>
-                    <h3 class="feature-title">Beautiful Designs</h3>
+                    <h3 class="feature-title">AI Image Generator</h3>
                     <p class="feature-description">
-                        Every app comes with modern, responsive designs that look great on all devices automatically.
+                        Create stunning visuals, logos, and illustrations from text descriptions with state-of-the-art AI.
                     </p>
+                    <span class="feature-badge free-badge">Free & Instant</span>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                        <i class="fas fa-video"></i>
                     </div>
-                    <h3 class="feature-title">Lightning Fast</h3>
+                    <h3 class="feature-title">AI Video Generator</h3>
                     <p class="feature-description">
-                        Build full-featured apps in seconds, not weeks. From idea to live app in minutes.
+                        Transform text prompts into engaging video content. Create marketing videos and social content instantly.
                     </p>
+                    <span class="feature-badge coming-badge">Coming Soon</span>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-database"></i>
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">
+                        <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3 class="feature-title">Built-in Database</h3>
+                    <h3 class="feature-title">Secure Auth</h3>
                     <p class="feature-description">
-                        Store and manage your data with powerful built-in database. No setup required.
+                        User authentication powered by Firebase. Secure login, register, and Google OAuth in seconds.
                     </p>
+                    <span class="feature-badge" style="background: rgba(67,233,123,0.1); color: #38f9d7;">Firebase</span>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #fa709a, #fee140);">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <h3 class="feature-title">Mobile Ready</h3>
                     <p class="feature-description">
-                        All apps are automatically optimized for mobile devices with responsive layouts.
+                        All apps are automatically optimized for mobile devices with fully responsive layouts.
                     </p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-share-alt"></i>
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #30cfd0, #330867);">
+                        <i class="fab fa-github"></i>
                     </div>
-                    <h3 class="feature-title">Instant Deploy</h3>
+                    <h3 class="feature-title">GitHub Pages Deploy</h3>
                     <p class="feature-description">
-                        Publish your app with one click and share it with the world immediately.
+                        Publish your app with one click to GitHub Pages. Free hosting, custom domain support included.
                     </p>
                 </div>
             </div>
@@ -178,9 +350,22 @@
                 <div class="step-item">
                     <div class="step-number">1</div>
                     <div class="step-content">
+                        <h3 class="step-title">Sign Up & Configure</h3>
+                        <p class="step-description">
+                            Create a free account with email or Google. Add your Gemini API key in settings to unlock all AI features.
+                        </p>
+                    </div>
+                    <div class="step-visual">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
                         <h3 class="step-title">Describe Your Idea</h3>
                         <p class="step-description">
-                            Tell AI what you want to build in plain language. Be as detailed or simple as you like.
+                            Tell AI what you want to create — text, image, or video. Use the AI Studio to generate content instantly.
                         </p>
                     </div>
                     <div class="step-visual">
@@ -189,28 +374,300 @@
                 </div>
                 
                 <div class="step-item">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3 class="step-title">AI Builds Your App</h3>
-                        <p class="step-description">
-                            Watch as AI creates your app in real-time with beautiful design and full functionality.
-                        </p>
-                    </div>
-                    <div class="step-visual">
-                        <i class="fas fa-wand-magic-sparkles"></i>
-                    </div>
-                </div>
-                
-                <div class="step-item">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <h3 class="step-title">Customize & Deploy</h3>
+                        <h3 class="step-title">Deploy to GitHub Pages</h3>
                         <p class="step-description">
-                            Fine-tune your app with simple commands, then publish it live with one click.
+                            Push your project to GitHub and enable GitHub Pages for free hosting. Share your creation with the world!
                         </p>
                     </div>
                     <div class="step-visual">
                         <i class="fas fa-rocket"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- AI STUDIO SECTION -->
+    <!-- ============================================ -->
+    <section class="ai-studio" id="ai-studio">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">
+                    <i class="fas fa-magic"></i> AI Studio
+                </span>
+                <h2 class="section-title">Create with AI</h2>
+                <p class="section-subtitle">
+                    Generate text, images, and videos powered by cutting-edge AI models
+                </p>
+            </div>
+
+            <!-- Auth Gate -->
+            <div class="ai-auth-gate" id="aiAuthGate">
+                <div class="auth-gate-content">
+                    <div class="auth-gate-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Login Required</h3>
+                    <p>Create a free account or log in to access the AI Studio and start generating content.</p>
+                    <div class="auth-gate-buttons">
+                        <button class="btn btn-primary btn-large" id="gateLoginBtn">
+                            <i class="fas fa-sign-in-alt"></i> Log In
+                        </button>
+                        <button class="btn btn-secondary btn-large" id="gateSignupBtn">
+                            <i class="fas fa-user-plus"></i> Sign Up Free
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Studio Interface (shown when logged in) -->
+            <div class="ai-studio-interface" id="aiStudioInterface" style="display:none;">
+                
+                <!-- API Key Warning -->
+                <div class="api-warning" id="apiKeyWarning" style="display:none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Gemini API key not configured. <a href="#" id="warningSetupKey">Set up API key →</a></span>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="studio-tabs">
+                    <button class="studio-tab active" data-tab="text">
+                        <i class="fas fa-align-left"></i> Text Generation
+                    </button>
+                    <button class="studio-tab" data-tab="image">
+                        <i class="fas fa-image"></i> Image Generation
+                    </button>
+                    <button class="studio-tab" data-tab="video">
+                        <i class="fas fa-video"></i> Video Generation
+                    </button>
+                </div>
+
+                <!-- ===== TEXT GENERATION TAB ===== -->
+                <div class="studio-panel active" id="panelText">
+                    <div class="studio-split">
+                        <div class="studio-input-side">
+                            <div class="input-header">
+                                <h4><i class="fas fa-pen"></i> Prompt</h4>
+                                <div class="prompt-templates">
+                                    <span class="template-label">Templates:</span>
+                                    <button class="template-btn" data-prompt="Tulis artikel blog tentang manfaat kecerdasan buatan untuk bisnis kecil, panjang 500 kata, gaya bahasa profesional.">Blog Article</button>
+                                    <button class="template-btn" data-prompt="Buat landing page copywriting untuk aplikasi produktivitas dengan headline yang menarik, 3 benefit utama, dan call-to-action.">Copywriting</button>
+                                    <button class="template-btn" data-prompt="Buatkan kode HTML dan CSS untuk komponen card produk yang modern dan responsif.">HTML/CSS</button>
+                                    <button class="template-btn" data-prompt="Tulis email marketing untuk produk skincare natural. Subject line yang menarik, isi email persuasif, CTA yang kuat.">Email Marketing</button>
+                                </div>
+                            </div>
+                            <textarea 
+                                id="textPrompt" 
+                                class="studio-textarea"
+                                placeholder="Describe what you want to generate... 
+
+Examples:
+• Write a professional blog post about AI trends in 2025
+• Create a product description for an eco-friendly water bottle
+• Generate a landing page copy for a mobile app
+• Write Python code for a REST API endpoint"
+                                rows="8"
+                            ></textarea>
+                            
+                            <div class="text-options">
+                                <div class="option-group">
+                                    <label>Style</label>
+                                    <select id="textStyle">
+                                        <option value="professional">Professional</option>
+                                        <option value="casual">Casual & Friendly</option>
+                                        <option value="creative">Creative</option>
+                                        <option value="technical">Technical</option>
+                                        <option value="persuasive">Persuasive</option>
+                                    </select>
+                                </div>
+                                <div class="option-group">
+                                    <label>Language</label>
+                                    <select id="textLanguage">
+                                        <option value="id">Indonesia</option>
+                                        <option value="en">English</option>
+                                        <option value="both">Bilingual</option>
+                                    </select>
+                                </div>
+                                <div class="option-group">
+                                    <label>Length</label>
+                                    <select id="textLength">
+                                        <option value="short">Short (100-200 words)</option>
+                                        <option value="medium" selected>Medium (300-500 words)</option>
+                                        <option value="long">Long (700-1000 words)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary btn-large generate-btn" id="btnGenerateText">
+                                <i class="fas fa-magic"></i>
+                                <span class="btn-text">Generate with Gemini</span>
+                                <span class="btn-loader" style="display:none;"><i class="fas fa-spinner fa-spin"></i> Generating...</span>
+                            </button>
+                        </div>
+
+                        <div class="studio-output-side">
+                            <div class="output-header">
+                                <h4><i class="fas fa-file-alt"></i> Generated Content</h4>
+                                <div class="output-actions" id="textOutputActions" style="display:none;">
+                                    <button class="action-btn" id="btnCopyText" title="Copy to clipboard">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                    <button class="action-btn" id="btnDownloadText" title="Download as .txt">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="output-placeholder" id="textOutputPlaceholder">
+                                <i class="fas fa-magic"></i>
+                                <p>Your generated text will appear here</p>
+                                <small>Enter a prompt and click Generate</small>
+                            </div>
+                            <div class="output-content" id="textOutput" style="display:none;"></div>
+                            <div class="output-meta" id="textOutputMeta" style="display:none;">
+                                <span class="meta-item"><i class="fas fa-font"></i> <span id="wordCount">0</span> words</span>
+                                <span class="meta-item"><i class="fas fa-clock"></i> <span id="genTime">0</span>s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== IMAGE GENERATION TAB ===== -->
+                <div class="studio-panel" id="panelImage">
+                    <div class="studio-split">
+                        <div class="studio-input-side">
+                            <div class="input-header">
+                                <h4><i class="fas fa-paint-brush"></i> Image Prompt</h4>
+                                <div class="prompt-templates">
+                                    <span class="template-label">Style:</span>
+                                    <button class="template-btn img-style-btn" data-style="photorealistic">Photorealistic</button>
+                                    <button class="template-btn img-style-btn" data-style="anime">Anime</button>
+                                    <button class="template-btn img-style-btn" data-style="oil painting">Oil Painting</button>
+                                    <button class="template-btn img-style-btn" data-style="3D render">3D Render</button>
+                                    <button class="template-btn img-style-btn" data-style="digital art">Digital Art</button>
+                                    <button class="template-btn img-style-btn" data-style="minimalist logo">Logo</button>
+                                </div>
+                            </div>
+                            <textarea 
+                                id="imagePrompt" 
+                                class="studio-textarea"
+                                placeholder="Describe your image in detail...
+
+Examples:
+• A futuristic city at night with neon lights and flying cars, cyberpunk style
+• A cute cat sitting on a cozy coffee shop, warm lighting, bokeh background
+• Professional logo for a tech startup with geometric design, minimalist
+• Beautiful Indonesian landscape with rice terraces and misty mountains"
+                                rows="6"
+                            ></textarea>
+
+                            <div class="image-options">
+                                <div class="option-group">
+                                    <label>Aspect Ratio</label>
+                                    <div class="ratio-buttons">
+                                        <button class="ratio-btn active" data-ratio="512x512">1:1</button>
+                                        <button class="ratio-btn" data-ratio="768x512">3:2</button>
+                                        <button class="ratio-btn" data-ratio="512x768">2:3</button>
+                                        <button class="ratio-btn" data-ratio="1024x576">16:9</button>
+                                    </div>
+                                </div>
+                                <div class="option-group">
+                                    <label>Quality</label>
+                                    <select id="imageQuality">
+                                        <option value="medium">Standard</option>
+                                        <option value="high" selected>High Quality</option>
+                                    </select>
+                                </div>
+                                <div class="option-group">
+                                    <label>Negative Prompt (optional)</label>
+                                    <input type="text" id="imageNegativePrompt" placeholder="blurry, low quality, distorted..." class="option-input">
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary btn-large generate-btn" id="btnGenerateImage">
+                                <i class="fas fa-image"></i>
+                                <span class="btn-text">Generate Image</span>
+                                <span class="btn-loader" style="display:none;"><i class="fas fa-spinner fa-spin"></i> Creating...</span>
+                            </button>
+                            <small class="powered-by">✨ Powered by Pollinations AI — Free, no API key needed!</small>
+                        </div>
+
+                        <div class="studio-output-side">
+                            <div class="output-header">
+                                <h4><i class="fas fa-images"></i> Generated Image</h4>
+                                <div class="output-actions" id="imageOutputActions" style="display:none;">
+                                    <button class="action-btn" id="btnDownloadImage" title="Download image">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                    <button class="action-btn" id="btnRegenerateImage" title="Regenerate">
+                                        <i class="fas fa-sync-alt"></i> Regenerate
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="output-placeholder" id="imageOutputPlaceholder">
+                                <i class="fas fa-image"></i>
+                                <p>Your generated image will appear here</p>
+                                <small>Enter a prompt and click Generate</small>
+                            </div>
+                            <div class="image-output-container" id="imageOutput" style="display:none;">
+                                <img id="generatedImage" src="" alt="Generated Image">
+                                <div class="image-loading" id="imageLoading" style="display:none;">
+                                    <div class="loading-spinner"></div>
+                                    <p>Creating your image...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== VIDEO GENERATION TAB ===== -->
+                <div class="studio-panel" id="panelVideo">
+                    <div class="video-coming-soon">
+                        <div class="video-soon-icon">
+                            <i class="fas fa-video"></i>
+                            <div class="pulse-ring"></div>
+                        </div>
+                        <h3>Video Generation — Coming Soon!</h3>
+                        <p>We're integrating the best video AI models. Be the first to know when it launches.</p>
+                        
+                        <div class="video-preview-list">
+                            <div class="video-preview-item">
+                                <div class="vp-icon"><i class="fas fa-film"></i></div>
+                                <div class="vp-info">
+                                    <strong>Text to Video</strong>
+                                    <span>Generate videos from text descriptions</span>
+                                </div>
+                                <span class="vp-badge soon">Soon</span>
+                            </div>
+                            <div class="video-preview-item">
+                                <div class="vp-icon"><i class="fas fa-images"></i></div>
+                                <div class="vp-info">
+                                    <strong>Image to Video</strong>
+                                    <span>Animate your static images</span>
+                                </div>
+                                <span class="vp-badge soon">Soon</span>
+                            </div>
+                            <div class="video-preview-item">
+                                <div class="vp-icon"><i class="fas fa-palette"></i></div>
+                                <div class="vp-info">
+                                    <strong>Style Transfer</strong>
+                                    <span>Apply artistic styles to your video</span>
+                                </div>
+                                <span class="vp-badge soon">Soon</span>
+                            </div>
+                        </div>
+
+                        <div class="notify-form">
+                            <input type="email" id="notifyEmail" placeholder="Enter your email for updates" class="option-input">
+                            <button class="btn btn-primary" id="btnNotifyMe">
+                                <i class="fas fa-bell"></i> Notify Me
+                            </button>
+                        </div>
+                        <p class="notify-success" id="notifySuccess" style="display:none;">
+                            <i class="fas fa-check-circle"></i> You'll be notified when video generation launches!
+                        </p>
                     </div>
                 </div>
             </div>
@@ -239,14 +696,8 @@
                         <h3 class="project-title">Task Manager Pro</h3>
                         <p class="project-description">Organize your tasks with smart AI prioritization</p>
                         <div class="project-meta">
-                            <span class="project-author">
-                                <i class="fas fa-user"></i>
-                                Sarah M.
-                            </span>
-                            <span class="project-views">
-                                <i class="fas fa-eye"></i>
-                                12.5K
-                            </span>
+                            <span class="project-author"><i class="fas fa-user"></i> Sarah M.</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> 12.5K</span>
                         </div>
                     </div>
                 </div>
@@ -261,14 +712,8 @@
                         <h3 class="project-title">E-Commerce Store</h3>
                         <p class="project-description">Full-featured online store with payment integration</p>
                         <div class="project-meta">
-                            <span class="project-author">
-                                <i class="fas fa-user"></i>
-                                John D.
-                            </span>
-                            <span class="project-views">
-                                <i class="fas fa-eye"></i>
-                                8.2K
-                            </span>
+                            <span class="project-author"><i class="fas fa-user"></i> John D.</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> 8.2K</span>
                         </div>
                     </div>
                 </div>
@@ -283,14 +728,8 @@
                         <h3 class="project-title">Analytics Dashboard</h3>
                         <p class="project-description">Real-time data visualization and reporting</p>
                         <div class="project-meta">
-                            <span class="project-author">
-                                <i class="fas fa-user"></i>
-                                Mike R.
-                            </span>
-                            <span class="project-views">
-                                <i class="fas fa-eye"></i>
-                                15.8K
-                            </span>
+                            <span class="project-author"><i class="fas fa-user"></i> Mike R.</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> 15.8K</span>
                         </div>
                     </div>
                 </div>
@@ -305,14 +744,8 @@
                         <h3 class="project-title">Event Booking</h3>
                         <p class="project-description">Schedule and manage events effortlessly</p>
                         <div class="project-meta">
-                            <span class="project-author">
-                                <i class="fas fa-user"></i>
-                                Emma L.
-                            </span>
-                            <span class="project-views">
-                                <i class="fas fa-eye"></i>
-                                9.3K
-                            </span>
+                            <span class="project-author"><i class="fas fa-user"></i> Emma L.</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> 9.3K</span>
                         </div>
                     </div>
                 </div>
@@ -325,16 +758,10 @@
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Recipe Finder</h3>
-                        <p class="project-description">Discover and share amazing recipes</p>
+                        <p class="project-description">Discover and share amazing recipes with AI</p>
                         <div class="project-meta">
-                            <span class="project-author">
-                                <i class="fas fa-user"></i>
-                                Lisa K.
-                            </span>
-                            <span class="project-views">
-                                <i class="fas fa-eye"></i>
-                                11.7K
-                            </span>
+                            <span class="project-author"><i class="fas fa-user"></i> Lisa K.</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> 11.7K</span>
                         </div>
                     </div>
                 </div>
@@ -347,16 +774,10 @@
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Learning Platform</h3>
-                        <p class="project-description">Online courses with progress tracking</p>
+                        <p class="project-description">Online courses with AI-powered progress tracking</p>
                         <div class="project-meta">
-                            <span class="project-author">
-                                <i class="fas fa-user"></i>
-                                David P.
-                            </span>
-                            <span class="project-views">
-                                <i class="fas fa-eye"></i>
-                                18.5K
-                            </span>
+                            <span class="project-author"><i class="fas fa-user"></i> David P.</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> 18.5K</span>
                         </div>
                     </div>
                 </div>
@@ -387,14 +808,14 @@
                         <p class="pricing-description">Perfect for getting started</p>
                     </div>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 3 apps</li>
-                        <li><i class="fas fa-check"></i> 1,000 AI generations/month</li>
-                        <li><i class="fas fa-check"></i> Community support</li>
-                        <li><i class="fas fa-check"></i> Basic templates</li>
-                        <li class="disabled"><i class="fas fa-times"></i> Custom domain</li>
-                        <li class="disabled"><i class="fas fa-times"></i> Priority support</li>
+                        <li><i class="fas fa-check"></i> Firebase Auth (Login/Register)</li>
+                        <li><i class="fas fa-check"></i> AI Text Generation (Gemini)</li>
+                        <li><i class="fas fa-check"></i> AI Image Generation (Free)</li>
+                        <li><i class="fas fa-check"></i> GitHub Pages Deployment</li>
+                        <li class="disabled"><i class="fas fa-times"></i> Custom Domain</li>
+                        <li class="disabled"><i class="fas fa-times"></i> Video Generation</li>
                     </ul>
-                    <a href="#" class="btn btn-outline btn-large">Get Started</a>
+                    <button class="btn btn-outline btn-large btn-full" id="btnFreeStart">Get Started Free</button>
                 </div>
                 
                 <div class="pricing-card featured">
@@ -409,14 +830,14 @@
                         <p class="pricing-description">For serious builders</p>
                     </div>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Unlimited apps</li>
-                        <li><i class="fas fa-check"></i> 50,000 AI generations/month</li>
-                        <li><i class="fas fa-check"></i> Priority support</li>
-                        <li><i class="fas fa-check"></i> Premium templates</li>
-                        <li><i class="fas fa-check"></i> Custom domain</li>
-                        <li><i class="fas fa-check"></i> Advanced analytics</li>
+                        <li><i class="fas fa-check"></i> Everything in Free</li>
+                        <li><i class="fas fa-check"></i> Video Generation (AI)</li>
+                        <li><i class="fas fa-check"></i> Priority AI Processing</li>
+                        <li><i class="fas fa-check"></i> Custom Domain</li>
+                        <li><i class="fas fa-check"></i> Advanced Analytics</li>
+                        <li><i class="fas fa-check"></i> Priority Support</li>
                     </ul>
-                    <a href="#" class="btn btn-primary btn-large">Start Free Trial</a>
+                    <button class="btn btn-primary btn-large btn-full">Start Free Trial</button>
                 </div>
                 
                 <div class="pricing-card">
@@ -431,13 +852,13 @@
                     </div>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Everything in Pro</li>
-                        <li><i class="fas fa-check"></i> Unlimited AI generations</li>
-                        <li><i class="fas fa-check"></i> Dedicated support</li>
-                        <li><i class="fas fa-check"></i> Team collaboration</li>
-                        <li><i class="fas fa-check"></i> White-label options</li>
-                        <li><i class="fas fa-check"></i> Custom integrations</li>
+                        <li><i class="fas fa-check"></i> Unlimited AI Generations</li>
+                        <li><i class="fas fa-check"></i> Team Collaboration</li>
+                        <li><i class="fas fa-check"></i> White-label Options</li>
+                        <li><i class="fas fa-check"></i> Custom AI Integrations</li>
+                        <li><i class="fas fa-check"></i> Dedicated Support</li>
                     </ul>
-                    <a href="#" class="btn btn-outline btn-large">Contact Sales</a>
+                    <button class="btn btn-outline btn-large btn-full">Contact Sales</button>
                 </div>
             </div>
         </div>
@@ -447,14 +868,15 @@
     <section class="cta">
         <div class="container">
             <div class="cta-content">
-                <h2 class="cta-title">Ready to build your dream app?</h2>
+                <h2 class="cta-title">Ready to build with AI?</h2>
                 <p class="cta-subtitle">
-                    Join thousands of creators building amazing apps with AI
+                    Join thousands of creators building amazing apps with Gemini AI
                 </p>
-                <a href="#" class="btn btn-primary btn-large">
+                <button class="btn btn-primary btn-large" id="ctaStartBtn">
+                    <i class="fas fa-magic"></i>
                     Start Building Free
                     <i class="fas fa-arrow-right"></i>
-                </a>
+                </button>
             </div>
         </div>
     </section>
@@ -469,7 +891,7 @@
                         <span class="logo-text">BuildAI</span>
                     </div>
                     <p class="footer-description">
-                        Turn your ideas into live apps and websites with AI. Build beautiful web apps in seconds.
+                        AI App Builder powered by Google Gemini. Build beautiful apps with text, image and video generation.
                     </p>
                     <div class="footer-social">
                         <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
@@ -483,8 +905,8 @@
                     <h4 class="footer-heading">Product</h4>
                     <ul>
                         <li><a href="#features">Features</a></li>
+                        <li><a href="#ai-studio">AI Studio</a></li>
                         <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="#templates">Templates</a></li>
                         <li><a href="#">Changelog</a></li>
                     </ul>
                 </div>
@@ -493,7 +915,7 @@
                     <h4 class="footer-heading">Resources</h4>
                     <ul>
                         <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">API Guide</a></li>
                         <li><a href="#">Blog</a></li>
                         <li><a href="#">Community</a></li>
                     </ul>
@@ -521,12 +943,78 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 BuildAI. All rights reserved.</p>
+                <p>&copy; 2025 BuildAI. All rights reserved. | Powered by <a href="https://ai.google.dev" target="_blank">Google Gemini</a> & <a href="https://firebase.google.com" target="_blank">Firebase</a></p>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle toast-icon"></i>
+        <span class="toast-message"></span>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FIREBASE SDK -->
+    <!-- ============================================ -->
+    <script type="module">
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ⚠️ REPLACE WITH YOUR FIREBASE CONFIG FROM:
+        // https://console.firebase.google.com
+        // ============================================
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged,
+            updateProfile,
+            sendPasswordResetEmail,
+            GoogleAuthProvider,
+            signInWithPopup
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        // ⚠️ REPLACE THIS WITH YOUR FIREBASE CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyB2E9WAEUuDAcwqAd4BaaGRbOuXoMynPHw",
+            authDomain: "naros-ai.firebaseapp.com",
+            projectId: "naros-ai",
+            storageBucket: "naros-ai.firebasestorage.app",
+            messagingSenderId: "1004559628148",
+            appId: "1:1004559628148:web:58b81b576d3887f2959e21",
+            measurementId: "G-9959JG7SJY"
+
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        // Make auth available globally
+        window.firebaseAuth = auth;
+        window.firebaseGoogleProvider = googleProvider;
+        window.firebaseFunctions = {
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged,
+            updateProfile,
+            sendPasswordResetEmail,
+            signInWithPopup
+        };
+
+        // Auth State Listener
+        onAuthStateChanged(auth, (user) => {
+            if (window.handleAuthStateChange) {
+                window.handleAuthStateChange(user);
+            }
+        });
+    </script>
+
+    <!-- Main JavaScript -->
     <script src="js/main.js"></script>
 </body>
 </html>
