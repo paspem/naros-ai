@@ -1,6 +1,6 @@
 # 🚀 AI App Builder - Build Apps with Natural Language
 
-Website modern seperti Trickle.so yang memungkinkan user membuat aplikasi web menggunakan AI dan natural language. Project ini siap untuk di-deploy ke GitHub dan production.
+Website modern yang memungkinkan user membuat aplikasi web menggunakan AI dan natural language. Project ini siap untuk di-deploy ke GitHub dan production.
 
 ![AI App Builder](https://img.shields.io/badge/Status-Production%20Ready-success)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
@@ -22,7 +22,7 @@ Website modern seperti Trickle.so yang memungkinkan user membuat aplikasi web me
 
 ## 🎯 Demo
 
-Website ini adalah landing page untuk platform AI App Builder yang terinspirasi dari Trickle.so.
+Website ini adalah landing page untuk platform AI App Builder
 
 ### Halaman Utama (index.html)
 **Live URL:** `index.html` atau `/`
